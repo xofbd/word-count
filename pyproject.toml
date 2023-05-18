@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "src"
+version = "0.1.0"
+description = "A simple word counting package in PySpark"
+authors = ["Don Fox <dfox09@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pyspark = "^3.4.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "7.3.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
