@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from argparse import ArgumentParser
 from pyspark import SparkConf, SparkContext
 from utils import filter, preprocess
