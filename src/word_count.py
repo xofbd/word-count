@@ -3,15 +3,14 @@ from argparse import ArgumentParser
 from pyspark import SparkConf, SparkContext
 from utils import filter, preprocess
 
-
 conf = SparkConf()
 conf.setAppName("word_count")
 sc = SparkContext(conf=conf)
 sc.setLogLevel("WARN")
 
 
-def count_words(input_dir, output_dir):
-    result = (
+def count_words(input_dir):
+    return (
         sc.textFile(input_dir)
         .flatMap(lambda line: line.split())
         .map(preprocess)
@@ -21,11 +20,13 @@ def count_words(input_dir, output_dir):
         .sortBy(lambda x: x[1], ascending=False)
     )
 
+
+def send_results(results, output_dir):
     if output_dir is None:
-        for row in result.collect():
+        for row in results.collect():
             print(row)
     else:
-        result.saveAsTextFile(output_dir)
+        results.saveAsTextFile(output_dir)
 
 
 def parse_args():
@@ -51,7 +52,8 @@ def parse_args():
 
 def main():
     args = parse_args()
-    count_words(args.input_dir, args.output_dir)
+    results = count_words(args.input_dir)
+    send_results(results, args.output_dir)
 
 
 if __name__ == "__main__":
