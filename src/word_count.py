@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 from pyspark import SparkConf, SparkContext
-from src.utils import find_words, preprocess
+from utils import filter, preprocess
 
 
 conf = SparkConf()
@@ -14,7 +14,7 @@ def count_words(input_dir, output_dir):
         sc.textFile(input_dir)
         .flatMap(lambda line: line.split())
         .map(preprocess)
-        .filter(find_words)
+        .filter(filter)
         .map(lambda word: (word, 1))
         .reduceByKey(lambda acc, val: acc + val)
         .sortBy(lambda x: x[1], ascending=False)
@@ -34,10 +34,12 @@ def parse_args():
     parser.add_argument(
         "input_dir",
         help="Path of files to calculate word frequencies.",
-        type="str",
+        type=str,
     )
     parser.add_argument(
-        "output_dir",
+        "-o",
+        "--output",
+        dest="output_dir",
         help="Directory to save results, defaults to STDOUT.",
         default=None,
         type=str
