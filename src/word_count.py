@@ -50,11 +50,11 @@ def parse_args():
     return parser.parse_args()
 
 
-def main():
-    args = parse_args()
-    results = count_words(args.input_dir)
-    send_results(results, args.output_dir)
+def main(input_dir, output_dir):
+    results = count_words(input_dir)
+    send_results(results, output_dir)
 
 
 if __name__ == "__main__":
-    main()
+    args = parse_args()
+    main(args.input_dir, args.output_dir)
