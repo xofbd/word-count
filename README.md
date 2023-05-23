@@ -17,5 +17,10 @@ options:
                         Directory to save results, defaults to STDOUT.
 ```
 
+You should run the application with `spark-submit`, e.g.:
+```console
+spark-submit --master local[*] --py-files src/utils.py src/word_count.py src/tests
+```
+
 ## License
 This project is distributed under the MIT license. Please see `LICENSE` for more information.
